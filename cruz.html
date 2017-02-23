@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Twitter API</title>
+  <script src="https://code.jquery.com/jquery-latest.js"></script>
+  <script>
+    $(document).ready(function(){
+      var dateTime = new Date();
+      console.log(dateTime);
+
+      $("#bernie").click(function(){
+        window.location = "bernie.html";
+      });
+
+      $("#hillary").click(function(){
+        window.location = "hillary.html";
+      });
+
+      $("#trump").click(function(){
+        window.location = "trump.html";
+      });
+
+      $("#cruz").click(function(){
+        window.location = "cruz.html";
+      });
+
+      $(".button").hover(function(){
+        $(this).css("box-shadow", "4px 4px 30px 4px red");
+        $(this).css("background-color", "white");
+    }, function(){
+      $(this).css("box-shadow", "2px 2px 13px red");
+      $(this).css("background-color", "transparent");
+      })
+
+      var api ={};
+
+      api.key = "";
+
+      api.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/cruz2016?count=100";
+
+      console.log(api)
+
+      $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: api.conditions,
+        success: function(response){
+          console.log(response);
+
+        for(var i = 0; i < response.statuses.length; i++){
+          $(".container").append("<div class='profile_pic' style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
+        }
+        }
+      })
+
+    });
+  </script>
+  <style>
+    body{
+      background-color: #4d4dff;
+      font-family: helvetica;
+    }
+    .container{
+      width: 103vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .profile_pic{
+      float: left;
+      width: 10vw;
+      height: 10vw;
+      background-size: 10vw 10vw;
+    }
+    .button{
+      position: fixed;
+      color: red;
+      padding:5px 7px 2px 7px;
+      box-shadow: 2px 2px 13px red;
+      -webkit-transition: box-shadow 1s, background-color 1s;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    #bernie{
+      top:100px;
+      left: 100px;
+    }
+    #trump{
+      top: 100px;
+      right: 100px;
+    }
+    #cruz{
+      bottom:100px;
+      left: 100px;
+    }
+    #hillary{
+      bottom: 100px;
+      right: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container"></div>
+  <div class="button" id="bernie">BERNIE SANDERS</div>
+  <div class="button" id="trump">DONALD TRUMP</div>
+  <div class="button" id="cruz">TED CRUZ</div>
+  <div class="button" id="hillary">HILLARY CLINTON</div>
+</body>
+</html>
