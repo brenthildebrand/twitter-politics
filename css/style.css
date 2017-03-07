@@ -63,6 +63,10 @@ body {
   box-sizing: border-box;
   overflow-y: scroll; }
 
+@media (max-width: 700px) {
+  .pic-container {
+    left: 130px;
+    width: calc(100vw - 100px); } }
 .pic {
   float: left;
   width: 60px;
@@ -120,6 +124,13 @@ body {
   animation-duration: 8s;
   animation-iteration-count: infinite; }
 
+@media (max-width: 700px) {
+  .instructions {
+    font-size: 10px; }
+
+  .instructions-2 {
+    font-size: 10px;
+    width: 100px; } }
 .button-container {
   position: fixed;
   width: 185px;
@@ -148,17 +159,6 @@ body {
     width: 102px; }
   .button-container #hillary {
     width: 170px; }
-  @media (max-width: 600px) {
-    .button-container .button {
-      font-size: 10px; }
-    .button-container #bernie {
-      width: 85px; }
-    .button-container #trump {
-      width: 79px; }
-    .button-container #cruz {
-      width: 51px; }
-    .button-container #hillary {
-      width: 85px; } }
   .button-container .button + .button {
     margin-top: 10px; }
   .button-container .pointer {
@@ -177,6 +177,11 @@ body {
       font-size: 30px;
       cursor: pointer;
       display: none; }
+    @media (max-width: 700px) {
+      .button-container .button__active .pointer {
+        right: -30px;
+        top: -4px;
+        font-size: 17px; } }
     .button-container .button__active:hover .pointer {
       display: block; }
     .button-container .button__active .selected {
@@ -185,6 +190,19 @@ body {
   .button-container .button__inactive {
     opacity: .3; }
 
+@media (max-width: 700px) {
+  .button-container {
+    width: 100px; }
+    .button-container .button {
+      font-size: 10px; }
+    .button-container #bernie {
+      width: 85px; }
+    .button-container #trump {
+      width: 79px; }
+    .button-container #cruz {
+      width: 51px; }
+    .button-container #hillary {
+      width: 85px; } }
 .button-container-start {
   left: calc(50vw - 92.5px); }
   .button-container-start .button:hover {
@@ -252,7 +270,6 @@ body {
   position: absolute;
   left: 25px;
   bottom: 25px;
-  font-size: 4em;
   width: auto;
   min-width: 40px;
   padding: 2px 10px;
@@ -260,7 +277,8 @@ body {
   border: 1px solid white;
   border-bottom-width: 3px;
   text-align: center;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  font-size: 4em; }
   .score .score-head {
     position: absolute;
     font-weight: 300;
@@ -286,5 +304,16 @@ body {
   padding: 3px 7px 2px 7px;
   cursor: pointer;
   font-size: 15px; }
+
+@media (max-width: 700px) {
+  .score {
+    font-size: 2em;
+    bottom: 40px; }
+    .score .score-head {
+      font-size: 10px; }
+
+  #reset {
+    font-size: 10px;
+    right: -55px; } }
 
 /*# sourceMappingURL=style.css.map */
