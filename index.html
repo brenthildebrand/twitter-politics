@@ -1,464 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
-<title>Twitter API</title>
-  <script src="https://code.jquery.com/jquery-latest.js"></script>
-  <script>
-    $(document).ready(function(){
-      var dateTime = new Date();
-      console.log(dateTime);
+  <meta charset="UTF-8">
+  <title>A Pen by  b hil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+      <link rel="stylesheet" href="css/style.css">
 
-      var index = true;
-      var bernieOn = false;
-      var hillaryOn = false;
-      var trumpOn = false;
-      var cruzOn = false;
-
-      var bernieWords = ["<em><strong>Most common words in <br>tweets tagged <span style=\"color:red\">#bernie2016</span>:</strong></em><br><span style=\"color:yellow\">----------------------------------------</span><br>"];
-      var hillaryWords = ["<em><strong>Most common words in <br>tweets tagged <span style=\"color:red\">#hillary2016</span>:</strong></em><br><span style=\"color:yellow\">----------------------------------------</span><br>"];
-      var trumpWords = ["<em><strong>Most common words in <br>tweets tagged <span style=\"color:red\">#trump2016</span>:</strong></em><br><span style=\"color:yellow\">----------------------------------------</span><br>"];
-      var cruzWords = ["<em><strong>Most common words in <br>tweets tagged <span style=\"color:red\">#cruz2016</span>:</strong></em><br><span style=\"color:yellow\">----------------------------------------</span><br>"];
-
-      $(".info").hover(function(){
-        $(".info").html("This site pulls the profile pictures of the most recent tweeters supporting each of the top polling candidates for the U.S. presidency, and also calculates the words that appear most frequently to see if there is any correlation");
-        $(".info").css({"width": "225px", "height": "auto", "font-size": "12px", "text-align": "left"});
-      }, function (){
-        $(".info").html("<strong>?</strong>");
-        $(".info").css({"width": "20", "height": "20", "font-size": "21px", "text-align": "center"});
-      })
-      $(".word_counter").hover(function(){
-        if(bernieOn === true){
-          $(".word_counter").html(bernieWords);
-        } else if(hillaryOn === true){
-          $(".word_counter").html(hillaryWords);
-        } else if (trumpOn === true){
-          $(".word_counter").html(trumpWords);
-        } else if (cruzOn === true){
-          $(".word_counter").html(cruzWords);
-        }
-        if(index === false){
-        $(".word_counter").css({"width": "160px", "height": "auto", "font-size": "12px", "text-align": "justify"});
-      }
-      }, function (){
-        $(".word_counter").html("<strong>#</strong>");
-        $(".word_counter").css({"width": "20", "height": "20", "font-size": "21px", "text-align": "center"});
-      })
-
-      $(".button").click(function(){
-        $(".button").removeClass("button__active");
-        $(this).addClass("button__active");
-      });
-
-      $("#bernie").click(function(){
-        $(".container_").fadeOut(700);
-        $(".container_bernie").fadeIn(300);
-        index = false;
-        hillaryOn = false;
-        cruzOn = false;
-        trumpOff = false;
-        bernieOn = true;      });
-
-      $("#hillary").click(function(){
-        $(".container_").fadeOut(700);
-        $(".container_hillary").fadeIn(300);
-        index = false;
-        bernieOn = false;
-        cruzOn = false;
-        trumpOn = false;
-        hillaryOn = true;
-      });
-
-      $("#trump").click(function(){
-        $(".container_").fadeOut(700);
-        $(".container_trump").fadeIn(300);
-        index = false;
-        bernieOn = false;
-        cruzOn = false;
-        hillaryOn = false;
-        trumpOn = true;
-      });
-
-      $("#cruz").click(function(){
-        $(".container_").fadeOut(700);
-        $(".container_cruz").fadeIn(300);
-        index = false;
-        bernieOn = false;
-        trumpOn = false;
-        hillaryOn = false;
-        cruzOn = true;
-      });
-
-      //////BERNIE API CALL///////////////////////////
-            var apiBernie ={};
-
-            apiBernie.key = "";
-
-            apiBernie.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/bernie2016?count=100";
-
-            console.log(apiBernie)
-
-            $.ajax({
-              type: 'GET',
-              dataType: 'json',
-              url: apiBernie.conditions,
-              success: function(response){
-                console.log(response);
-
-                var bernieStatuses = "";
-                var bernieArr = [];
-                var bernieWordCheckerArr = [];
-                var bernieWordCount = [];
-                var currentBerniePosition = 0;
-                //var bernieWords = [];
-
-              for(var i = 0; i < response.statuses.length; i++){
-                $(".container_bernie").append("<div class='profile_pic' style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
-                bernieStatuses += response.statuses[i].text;
-              }
-
-              bernieStatuses = bernieStatuses.toLowerCase();
-              bernieStatuses = bernieStatuses.replace(/#|\.|,|:|@|"|\?|!/gi, "");
-              bernieArr = bernieStatuses.split(" ");
-
-              for(var j = 0; j < bernieArr.length; j++){
-                if((bernieWordCheckerArr.indexOf(bernieArr[j])) < 0){
-                  bernieWordCheckerArr.push(bernieArr[j]);
-                  //bernieObject.items.push({"word":bernieArr[j], "frequency":1});
-                  bernieWordCount.push(1);
-                } else {
-                  //bernieWordCount += 2;
-                  currentBerniePosition = bernieWordCheckerArr.indexOf(bernieArr[j]);
-                  bernieWordCount[currentBerniePosition] += 1;
-                  //console.log(currentBerniePosition);
-              }
-            }
-              var bernieWordCountSorted = bernieWordCount.slice(0);
-              bernieWordCountSorted.sort(function(a, b){return b-a});
-
-              console.log(bernieWordCount);
-              console.log(bernieWordCountSorted);
-              console.log(bernieWordCheckerArr);
-
-
-
-              for(var k = 0; bernieWords.length < 11; k++){
-                var current = bernieWordCount.indexOf(bernieWordCountSorted[k]);
-                var currentWord = bernieWordCheckerArr[current];
-                if(currentWord.length > 5 && currentWord.length < 11 && currentWord !== "bernie2016" && currentWord !== "bernie" && currentWord !== "sanders" && currentWord !== "there's" && (currentWord.indexOf("http")< 0)){
-                  bernieWords.push((bernieWords.length) + ". " + currentWord + "<br>");
-                  bernieWordCount[current] = 0;
-                }
-              }
-
-              console.log(bernieWordCountSorted);
-
-              console.log(bernieWords);
-
-              }
-            })
-      //////HILLARY API CALL////////////////////////
-            var apiHillary ={};
-
-            apiHillary.key = "";
-
-            apiHillary.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/hillary2016?count=100";
-
-            console.log(apiHillary)
-
-            $.ajax({
-              type: 'GET',
-              dataType: 'json',
-              url: apiHillary.conditions,
-              success: function(response){
-                console.log(response);
-
-                var hillaryStatuses = "";
-                var hillaryArr = [];
-                var hillaryWordCheckerArr = [];
-                var hillaryWordCount = [];
-                var currentHillaryPosition = 0;
-
-              for(var i = 0; i < response.statuses.length; i++){
-                $(".container_hillary").append("<div class='profile_pic' style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
-                hillaryStatuses += response.statuses[i].text;
-              }
-
-              hillaryStatuses = hillaryStatuses.toLowerCase();
-              hillaryStatuses = hillaryStatuses.replace(/#|\.|,|:|@|"|\?|!/gi, "");
-              hillaryArr = hillaryStatuses.split(" ");
-
-              for(var j = 0; j < hillaryArr.length; j++){
-                if((hillaryWordCheckerArr.indexOf(hillaryArr[j])) < 0){
-                  hillaryWordCheckerArr.push(hillaryArr[j]);
-                  hillaryWordCount.push(1);
-                } else {
-                  currentHillaryPosition = hillaryWordCheckerArr.indexOf(hillaryArr[j]);
-                  hillaryWordCount[currentHillaryPosition] += 1;
-              }
-              }
-              var hillaryWordCountSorted = hillaryWordCount.slice(0);
-              hillaryWordCountSorted.sort(function(a, b){return b-a});
-
-              for(var k = 0; hillaryWords.length < 11; k++){
-                var current = hillaryWordCount.indexOf(hillaryWordCountSorted[k]);
-                var currentWord = hillaryWordCheckerArr[current];
-                if(currentWord.length > 5 && currentWord.length < 11 && currentWord !== "hillary2016" && currentWord !== "hillary" && currentWord !== "hillary" && currentWord !== "there's" && (currentWord.indexOf("http")< 0)){
-                  hillaryWords.push((hillaryWords.length) + ". " + currentWord + "<br>");
-                  hillaryWordCount[current] = 0;
-                }
-              }
-              }
-            });
-      //////TRUMP API CALL///////////////////////
-            var apiTrump ={};
-
-            apiTrump.key = "";
-
-            apiTrump.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/trump2016?count=100";
-
-            console.log(apiTrump)
-
-            $.ajax({
-              type: 'GET',
-              dataType: 'json',
-              url: apiTrump.conditions,
-              success: function(response){
-                console.log(response);
-
-                var trumpStatuses = "";
-                var trumpArr = [];
-                var trumpWordCheckerArr = [];
-                var trumpWordCount = [];
-                var currentTrumpPosition = 0;
-
-              for(var i = 0; i < response.statuses.length; i++){
-                $(".container_trump").append("<div class='profile_pic' style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
-                trumpStatuses += response.statuses[i].text;
-              }
-
-              trumpStatuses = trumpStatuses.toLowerCase();
-              trumpStatuses = trumpStatuses.replace(/#|\.|,|:|@|"|\?|!/gi, "");
-              trumpArr = trumpStatuses.split(" ");
-
-              for(var j = 0; j < trumpArr.length; j++){
-                if((trumpWordCheckerArr.indexOf(trumpArr[j])) < 0){
-                  trumpWordCheckerArr.push(trumpArr[j]);
-                  trumpWordCount.push(1);
-                } else {
-                  currentTrumpPosition = trumpWordCheckerArr.indexOf(trumpArr[j]);
-                  trumpWordCount[currentTrumpPosition] += 1;
-              }
-              }
-              var trumpWordCountSorted = trumpWordCount.slice(0);
-              trumpWordCountSorted.sort(function(a, b){return b-a});
-
-              for(var k = 0; trumpWords.length < 11; k++){
-                var current = trumpWordCount.indexOf(trumpWordCountSorted[k]);
-                var currentWord = trumpWordCheckerArr[current];
-                if(currentWord.length > 5 && currentWord.length < 11 && currentWord !== "trump2016" && currentWord !== "trump" && currentWord !== "trump" && currentWord !== "there's" && (currentWord.indexOf("http")< 0)){
-                  trumpWords.push((trumpWords.length) + ". " + currentWord + "<br>");
-                  trumpWordCount[current] = 0;
-                }
-              }
-              }
-            })
-      //////CRUZ API CALL////////////////////
-      var apiCruz ={};
-
-      apiCruz.key = "";
-
-      apiCruz.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/cruz2016?count=100";
-
-      console.log(apiCruz)
-
-      $.ajax({
-        type: 'GET',
-        dataType: 'json',
-        url: apiCruz.conditions,
-        success: function(response){
-          console.log(response);
-
-          var cruzStatuses = "";
-          var cruzArr = [];
-          var cruzWordCheckerArr = [];
-          var cruzWordCount = [];
-          var currentCruzPosition = 0;
-
-        for(var i = 0; i < response.statuses.length; i++){
-          $(".container_cruz").append("<div class='profile_pic' style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
-          cruzStatuses += response.statuses[i].text;
-        }
-
-        cruzStatuses = cruzStatuses.toLowerCase();
-        cruzStatuses = cruzStatuses.replace(/#|\.|,|:|@|"|\?|!/gi, "");
-        cruzArr = cruzStatuses.split(" ");
-
-        for(var j = 0; j < cruzArr.length; j++){
-          if((cruzWordCheckerArr.indexOf(cruzArr[j])) < 0){
-            cruzWordCheckerArr.push(cruzArr[j]);
-            cruzWordCount.push(1);
-          } else {
-            currentCruzPosition = cruzWordCheckerArr.indexOf(cruzArr[j]);
-            cruzWordCount[currentCruzPosition] += 1;
-        }
-        }
-        var cruzWordCountSorted = cruzWordCount.slice(0);
-        cruzWordCountSorted.sort(function(a, b){return b-a});
-
-        for(var k = 0; cruzWords.length < 11; k++){
-          var current = cruzWordCount.indexOf(cruzWordCountSorted[k]);
-          var currentWord = cruzWordCheckerArr[current];
-          if(currentWord.length > 5 && currentWord.length < 11 && currentWord !== "cruz2016" && currentWord !== "cruz" && currentWord !== "hillary" && currentWord !== "there's" && (currentWord.indexOf("http")< 0)){
-            cruzWords.push((cruzWords.length) + ". " + currentWord + "<br>");
-            cruzWordCount[current] = 0;
-          }
-        }
-        }
-      });
-      ///////////END APIS//////
-
-    });
-  </script>
-  <style>
-    body{
-      background-color: #2d2d86;
-      font-family: helvetica;
-      color: white;
-    }
-    .container{
-      width: 103vw;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .word_counter{
-      width:20px;
-      height:20px;
-      border: 1px solid white;
-      position: fixed;
-      right: 0;
-      top: 0;
-      background-color: #2d2d86;
-      text-align: center;
-      padding:7px;
-      font-size: 23px;
-      box-shadow: 0px 3px 0px white;
-    }
-    .container_{
-      display: none;
-    }
-    .container_bernie{
-      width: 103vw;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .container_hillary{
-      width: 103vw;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .container_trump{
-      width: 103vw;
-      height: 170vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .container_cruz{
-      width: 103vw;
-      height: 170vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .profile_pic{
-      float: left;
-      width: 10vw;
-      height: 10vw;
-      background-size: 10vw 10vw;
-    }
-    .button{
-      position: fixed;
-      color: white;
-      border: 1px solid white;
-      border-bottom: 3px solid white;
-      padding:5px 7px 2px 7px;
-      -webkit-transition: box-shadow 1s, background-color .5s, margin-top 1s;
-      font-size: 20px;
-      cursor: pointer;
-    }
-    .button:hover{
-      background: #2d2d86 !important;
-    }
-    .button__active{
-      border-color: yellow;
-      color: yellow;
-    }
-    #hillary{
-      top:30%;
-      left: 50%;
-      margin-left: -95px;
-    }
-    #trump{
-      top: 30%;
-      margin-top: 60px;
-      left: 50%;
-      margin-left: -87px;
-    }
-    #bernie{
-      top: 30%;
-      margin-top: 120px;
-      left: 50%;
-      margin-left: -95px;
-    }
-    #bernie_words{
-      color: white;
-      border: 1px solid white;
-      width: 200px;
-      height:200px;
-      position: fixed;
-      left: -50%;
-      margin-top: 50%;
-      margin-left: -100px;
-
-    }
-    #cruz{
-      top: 30%;
-      margin-top: 180px;
-      left: 50%;
-      margin-left: -57.5px;
-    }
-    .info{
-      width:20px;
-      height:20px;
-      border: 1px solid white;
-      position: fixed;
-      left: 0;
-      top: 0;
-      background-color: #2d2d86;
-      text-align: center;
-      padding:7px;
-      font-size: 21px;
-      box-shadow: 0px 3px 0px white;
-    }
-  </style>
+  
 </head>
+
 <body>
-  <div class="container"></div>
-  <div class="container_ container_bernie"></div>
-  <div class="container_ container_hillary"></div>
-  <div class="container_ container_trump"></div>
-  <div class="container_ container_cruz"></div>
-  <div class="button" id="bernie">BERNIE SANDERS</div>
-  <div class="button" id="trump">DONALD TRUMP</div>
-  <div class="button" id="cruz">TED CRUZ</div>
-  <div class="button" id="hillary">HILLARY CLINTON</div>
-  <div class="info"><strong>?</strong></div>
-  <div class="word_counter"><strong>#</strong></div>
+  <div class="bg-wrap"></div>
+
+<marquee class="title">TWITTER POLITICS &#8195//&#8195 Candidates : Bernie Sanders, Donald Trump, Ted Cruz, and Hillary Clinton &#8195//&#8195 Score : <span class="score-target">0</span></marquee>
+
+<p class="instructions">Select at least two and up to four candidates</p>
+  
+
+<div class="button-container button-container-start">
+  
+  <span class="instructions-2"> Select a candidate and start guessing!</span>
+
+  <div class="button" id="bernie">
+    BERNIE SANDERS  
+    <span class = "pointer">☜</span>
+  </div>
+  <div class="button" id="trump">
+    DONALD TRUMP
+    <span class = "pointer">☜</span>
+  </div>
+  <div class="button" id="cruz">
+    Ted Cruz
+    <span class = "pointer">☜</span>
+  </div>
+  <div class="button" id="hillary">
+    HILLARY CLINTON
+    <span class = "pointer selected">☜</span>
+  </div>
+  
+  <div class="start">Start »</div>
+
+</div>
+
+<div class="info">
+  ?
+</div>
+<div id="reset">Reset</div>
+<div class="info__text hide">
+  <div class="x">✕</div>
+  <h2>Twitter Politics</h2>
+  <p>
+    To play, select the candidates you would like to compare.
+    <br/>
+    <br/>
+    After pressing start, select a candidate with the <span style='color: gold'>☞</span> pointer<span style='color: gold'> ☜</span> to guess which user used a hashtag seemingly in support of that particular candidate.
+    <br/>
+    <br/>
+    <br/>
+    <em>Please note:</em>
+    <br/>
+    <br/>
+    This site gathers users' profile pictures based on the appearence of
+    '#<em>candidate</em>2016' in one or more tweets.
+    It is possible that people who do 
+    not support a candidate can use their hashtag.
+    
+  </p>
+</div>
+<div class="score hide"><div class="score-target">0</div></div>
+<div class="pic-container"></div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
 </body>
 </html>
