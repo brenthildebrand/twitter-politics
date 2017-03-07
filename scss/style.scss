@@ -5,7 +5,7 @@ $red: #B22222;
 $bg: linear-gradient(to right, $blue, $red);
 $bgr: linear-gradient(to right, $red, $blue);
 
-body{   
+body{
   //background: linear-gradient(to right, $blue, $red);
   font-family: 'Rubik';
   color: white;
@@ -48,12 +48,11 @@ body{
     animation-name: bg-ani;
     animation-iteration-count: infinite;
     animation-duration: 15s;
-    outline: 1px solid green;
     z-index: -1;
 }
 
-.pic-container::-webkit-scrollbar { 
-    display: none; 
+.pic-container::-webkit-scrollbar {
+    display: none;
 }
 
 .pic-container{
@@ -126,7 +125,6 @@ body{
   animation-iteration-count: infinite;
 }
 .button-container{
-  // outline: 1px solid pink;
   position: fixed;
   width: 185px;
   left: 20px;
@@ -148,27 +146,45 @@ body{
     text-transform: uppercase;
     transition: left 1s, opacity 1s;
   }
-  
+
   #bernie{
     width: 170px;
   }
-  
+
   #trump{
     width: 158px;
   }
-  
+
   #cruz{
     width: 102px;
   }
-  
+
   #hillary{
     width: 170px;
   }
-  
+
+  @media(max-width: 600px){
+    .button{
+      font-size: 10px;
+    }
+    #bernie{
+      width: 85px;
+    }
+    #trump{
+      width: 79px;
+    }
+    #cruz{
+      width: 51px;
+    }
+    #hillary{
+      width: 85px;
+    }
+  }
+
   .button + .button{
     margin-top: 10px;
   }
-  
+
   .pointer{
     display: none;
   }
@@ -222,7 +238,7 @@ body{
 }
 
 .start{
-  position: absolute; 
+  position: absolute;
   left: 0;
   bottom: -60px;
   border: 1px solid gold;
@@ -289,9 +305,10 @@ body{
   border: 1px solid white;
   border-bottom-width: 3px;
   text-align: center;
-  &::before{
-    content: 'Score:';
+  box-sizing: border-box;
+  .score-head{
     position: absolute;
+    font-weight: 300;
     font-size: 15px;
     top: -20px;
     left: -1px;
@@ -303,16 +320,17 @@ body{
   color: gold;
 }
 .hide{
- display: none; 
+ display: none;
   }
 #reset{
   position: absolute;
-  left: 65px;
-  top: 63px;
+  right: -85px;
+  bottom: -3px;
   border: 1px solid $red;
   border-bottom-width: 3px;
   color: $red;
   padding: 3px 7px 2px 7px;
   cursor: pointer;
-  
+  font-size: 15px;
+
 }
