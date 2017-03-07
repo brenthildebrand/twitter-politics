@@ -327,6 +327,14 @@ body{
       font-size: .85em;
       line-height: 1.35em;
     }
+    @media(max-width: $mobile-width){
+      left: 20px;
+      width: calc(100vw - 40px);
+      p{
+        font-size: $mobile-size;
+        line-height: normal;
+      }
+    }
     .x{
       position: absolute;
       right: 20px;
