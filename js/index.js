@@ -16,13 +16,13 @@
         name: "hillary",
         pics: []
       };
-      
+
       var settings = {
         gameRunning : false,
         selected : null,
         score: 0
       };
-      
+
       //randomize starting selected on game start
       var ranStart = function() {
         let arr = [];
@@ -31,7 +31,7 @@
         $(".button__active").each(function(){
           arr.push($(this).attr('id'));
         });
-                
+
         for(let j = 0; j < 11; j++){
           setTimeout(function(){
             $(".pointer").removeClass("selected");
@@ -42,9 +42,9 @@
           }, 300 + t);
           t = t * 1.25;
         }
-        
+
       };
-      
+
       //selects selected
       var selectable = function() {
         $("body").on("click", ".button__active", function() {
@@ -53,13 +53,13 @@
           settings.selected = $(this).attr("id");
         });
       }
-      
+
       $("body").on("click", ".pic-s", function(){
         if(settings.gameRunning = true){
           let curId = $(this).attr("id");
           curId = curId.slice(0, curId.length - 2);
           console.log(curId);
-          
+
           if(settings.selected == curId){
             $(this).append("<div class='right answer'>✓ " + curId + "</div>");
             settings.score ++;
@@ -72,13 +72,13 @@
           $(this).removeClass("pic-s");
         }
       });
-      
+
       var gameStart = function() {
         ranStart();
         selectable();
         settings.gameRunning = true;
-        
-        $(".instructions-2").fadeIn(1000);
+
+        $(".instructions-2, .spinner").fadeIn(1000);
        //$(".pic").
       };
 
@@ -104,16 +104,16 @@
 
         return array;
       }
-            
+
       var noDuplicates = function(){
-        let arrCopy =[]
+        let arrCopy =[];
 
         $.each(combined, function(i, el){
             if($.inArray(el, arrCopy) === -1) {arrCopy.push(el); console.log("deleted an item");}
         });
-        
+
         combined = arrCopy;
-        
+
       };
 
       var buttonClick = function() {
@@ -141,7 +141,7 @@
             let name = $(this).attr('id');
             callApi(name);
           });
-          
+
           gameStart();
 
         }
@@ -169,12 +169,12 @@
 
             combined = shuffle(combined);
             combined = shuffle(combined);
-                        
+
             noDuplicates();
-            
+
             $(".pic-container").append(combined);
 
-            
+
 //             var j = 0;
 
 //             function sLoop(a, j) {
@@ -196,17 +196,18 @@
         })
 
       };
-      
+
       $("#reset").click(function(){
         settings.score = 0;
         settings.gameRunning = false;
         settings.selected = null;
         $(".button-container").addClass("button-container-start");
-        $(".instructions-2").fadeOut();
+        $(".instructions-2, .spinner").fadeOut();
         $("body").append("<p class='instructions'>Select at least two and up to four candidates</p>");
         $(".button-container").append("<div class='start'>Start</div>");
-        $(".pic-container").empty();
+        $(".pic-container").empty().append('<div class="spinner hide"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></div>');
         $(".score").addClass("hide");
+        $(".button").removeClass("button__active").removeClass("button__inactive");
         combined = [];
       });
 
