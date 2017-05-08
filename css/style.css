@@ -22,6 +22,90 @@ body {
   letter-spacing: 1px;
   font-style: italic; }
 
+@keyframes cand {
+  7% {
+    transform: rotate(0deg); }
+  18% {
+    transform: rotate(90deg); }
+  32% {
+    transform: rotate(90deg); }
+  43% {
+    transform: rotate(180deg); }
+  57% {
+    transform: rotate(180deg); }
+  68% {
+    transform: rotate(270deg); }
+  82% {
+    transform: rotate(270deg); }
+  93% {
+    transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg); } }
+.intro {
+  position: relative;
+  z-index: 1000;
+  text-align: center; }
+  .intro .star-left {
+    position: absolute;
+    right: calc(50vw + 200px);
+    top: 150px;
+    color: white;
+    font-size: 40px; }
+  .intro .star-right {
+    position: absolute;
+    right: calc(50vw - 240px);
+    top: 150px;
+    color: white;
+    font-size: 40px; }
+  .intro .cand-img-container {
+    height: 320px;
+    width: 320px;
+    box-shadow: -2px -2px 7px 0px rgba(255, 255, 255, 0.15) inset, -20px -20px 20px 0px rgba(255, 255, 255, 0.05) inset, 0px 0px 5px 5px rgba(0, 0, 0, 0.1), 2px 2px 2px rgba(0, 0, 0, 0.2) inset;
+    border-radius: 50%;
+    margin-top: 70px;
+    margin-left: calc(50vw - 160px);
+    position: relative;
+    overflow: hidden; }
+    .intro .cand-img-container .cand-img-wrap {
+      position: absolute;
+      bottom: 20px;
+      left: -150px;
+      width: 200%;
+      height: 200%;
+      background-image: url(../img/combined.png);
+      background-repeat: no-repeat;
+      background-position: 57% center;
+      background-size: 100% auto;
+      animation-name: cand;
+      animation-iteration-count: infinite;
+      animation-duration: 15s; }
+  .intro h1 {
+    font-size: 3.5em;
+    text-align: center;
+    margin-bottom: .2em; }
+  .intro h3 {
+    color: gold;
+    text-align: center;
+    margin-top: 0;
+    font-weight: 300; }
+  .intro .start-button {
+    border: 2px solid gold;
+    color: gold;
+    display: inline-block;
+    padding: 10px 25px;
+    font-size: 20px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background .5s; }
+    .intro .start-button:hover {
+      background: gold;
+      color: purple; }
+  .intro .desc {
+    width: 600px;
+    height: 200px;
+    margin-left: calc(50vw - 300px);
+    outline: 1px solid white; }
+
 @keyframes bg-ani {
   30% {
     opacity: 1;
@@ -73,26 +157,30 @@ body {
 
 .pic {
   float: left;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   background-size: 100%;
   margin: 25px;
   cursor: pointer;
-  position: relative; }
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: -2px -2px 7px 0px rgba(255, 255, 255, 0.15) inset, -20px -20px 20px 0px rgba(255, 255, 255, 0.05) inset, 0px 0px 5px 5px rgba(0, 0, 0, 0.05), 2px 2px 2px rgba(0, 0, 0, 0.2) inset; }
   .pic .answer {
-    position: absolute;
+    position: relative;
     left: 0;
     width: 100%;
-    bottom: -12px;
-    height: 15px;
+    top: 0;
+    height: 100%;
     font-size: 11px;
-    line-height: 16.5px;
-    background: lime;
+    line-height: 80px;
+    background: rgba(0, 255, 0, 0.4);
     box-sizing: border-box;
     text-transform: uppercase;
     text-align: center; }
   .pic .wrong {
-    background: red; }
+    background: rgba(255, 0, 0, 0.4); }
 
 @media (max-width: 700px) {
   .pic-container {

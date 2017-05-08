@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Twitter Politics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+      <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+  <div class="bg-wrap"></div>
+
+  <div class="intro">
+
+    <div class="star-left">★</div>
+
+    <div class="star-right">★</div>
+
+    <div class="cand-img-container"><div class="cand-img-wrap"></div></div>
+    <h1>Twitter Politics</h1>
+    <h3>— A Topical Guessing Game —</h3>
+
+    <div class="start-button">Start</div>
+
+    <!-- <div class="desc">
+      A game that pulls the profile pictures of supporters of all of the top polling US Presidetial Primary Candidates.
+    </div> -->
+
+  </div>
+
+<marquee class="title hide">TWITTER POLITICS &#8195//&#8195 Candidates : Bernie Sanders, Donald Trump, Ted Cruz, and Hillary Clinton &#8195//&#8195 Score : <span class="score-target">0</span></marquee>
+
+<p class="instructions hide">Select at least two and up to four candidates</p>
+
+
+<div class="button-container button-container-start hide">
+
+  <span class="instructions-2"> Select a candidate and start guessing!</span>
+
+  <div class="button" id="bernie">
+    BERNIE SANDERS
+    <span class = "pointer">☜</span>
+  </div>
+  <div class="button" id="trump">
+    DONALD TRUMP
+    <span class = "pointer">☜</span>
+  </div>
+  <div class="button" id="cruz">
+    Ted Cruz
+    <span class = "pointer">☜</span>
+  </div>
+  <div class="button" id="hillary">
+    HILLARY CLINTON
+    <span class = "pointer selected">☜</span>
+  </div>
+
+  <div class="start">Start »</div>
+
+</div>
+
+<div class="info hide">
+  ?
+</div>
+<div class="info__text hide">
+  <div class="x">✕</div>
+  <h2>Twitter Politics</h2>
+  <p>
+    To play, select the candidates you would like to compare.
+    <br/>
+    <br/>
+    After pressing start, select a candidate with the <span style='color: gold'>☞</span> pointer<span style='color: gold'> ☜</span> to guess which user used a hashtag seemingly in support of that particular candidate.
+    <br/>
+    <br/>
+    <br/>
+    <em>Please note:</em>
+    <br/>
+    <br/>
+    This site gathers users' profile pictures based on the appearence of
+    '#<em>candidate</em>2016' in one or more tweets.
+    It is possible that people who do
+    not support a candidate can use their hashtag.
+
+  </p>
+</div>
+<div class="score hide"><div class="score-target">0</div><span class="score-head">Score</span><div id="reset">Restart</div></div>
+<div class="pic-container"><div class="spinner hide"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></div></div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <script src="js/index.js"></script>
+
+</body>
+</html>

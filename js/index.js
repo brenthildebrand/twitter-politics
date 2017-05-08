@@ -1,3 +1,4 @@
+
     $(document).ready(function() {
 
       var bernie = {
@@ -54,6 +55,11 @@
         });
       }
 
+      $("body").on("click", ".start-button", function(){
+        $(".intro").addClass("hide");
+        $(".title, .instructions, .button-container, .info").removeClass("hide");
+      });
+
       $("body").on("click", ".pic-s", function(){
         if(settings.gameRunning = true){
           let curId = $(this).attr("id");
@@ -106,7 +112,7 @@
       }
 
       var noDuplicates = function(){
-        let arrCopy =[];
+        var arrCopy =[];
 
         $.each(combined, function(i, el){
             if($.inArray(el, arrCopy) === -1) {arrCopy.push(el); console.log("deleted an item");}
@@ -208,6 +214,7 @@
         $(".pic-container").empty().append('<div class="spinner hide"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></div>');
         $(".score").addClass("hide");
         $(".button").removeClass("button__active").removeClass("button__inactive");
+        buttonClick();
         combined = [];
       });
 
