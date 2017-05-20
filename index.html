@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-      <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+
 
 
 </head>
@@ -88,6 +91,16 @@
 </div>
 <div class="score hide"><div class="score-target">0</div><span class="score-head">Score</span><div id="reset">Restart</div></div>
 <div class="pic-container"><div class="spinner hide"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></div></div>
+
+<div class="final-score-overlay">
+  <div class="score-bar">
+    <div class="score-bar-right"></div>
+    <div class="avg-score-bar">
+      <div class="avg-score-text">Avg. Score out of <span id="avg"></span> users</div>
+    </div>
+  </div>
+  <div class="play-again">Play Again?</div>
+</div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">

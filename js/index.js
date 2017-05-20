@@ -1,3 +1,19 @@
+// Set the configuration for your app
+// TODO: Replace with your project's config object
+var config = {
+  apiKey: "AIzaSyCUBJczlRwsIBVS14yCIpoB-mNg4KyEBLI",
+  authDomain: "twitter-politics.firebaseapp.com",
+  databaseURL: "https://twitter-politics.firebaseio.com",
+  storageBucket: "bucket.appspot.com"
+};
+
+var d, dAvg, dPlayers;
+
+// var avg = firebase.database().ref("data");
+//
+// avg.update({
+//    "avg": 10
+// });
 
     $(document).ready(function() {
 
@@ -26,18 +42,18 @@
 
       //randomize starting selected on game start
       var ranStart = function() {
-        let arr = [];
-        let p = 0;
-        let t= 200;
+        var arr = [];
+        var p = 0;
+        var t= 200;
         $(".button__active").each(function(){
           arr.push($(this).attr('id'));
         });
 
-        for(let j = 0; j < 11; j++){
+        for(var j = 0; j < 11; j++){
           setTimeout(function(){
             $(".pointer").removeClass("selected");
-            p < arr.length - 1 ? p++ : p = 0;
-            let cur = document.getElementById(arr[p])
+            if(p < arr.length - 1) {p++;} else {p = 0;}
+            var cur = document.getElementById(arr[p]);
             $(cur).children(".pointer").addClass("selected");
             settings.selected = arr[p];
           }, 300 + t);
@@ -53,7 +69,7 @@
           $(this).children(".pointer").addClass("selected");
           settings.selected = $(this).attr("id");
         });
-      }
+      };
 
       $("body").on("click", ".start-button", function(){
         $(".intro").addClass("hide");
@@ -61,10 +77,9 @@
       });
 
       $("body").on("click", ".pic-s", function(){
-        if(settings.gameRunning = true){
-          let curId = $(this).attr("id");
+        if(settings.gameRunning === true) {
+          var curId = $(this).attr("id");
           curId = curId.slice(0, curId.length - 2);
-          console.log(curId);
 
           if(settings.selected == curId){
             $(this).append("<div class='right answer'>✓ " + curId + "</div>");
@@ -72,11 +87,49 @@
             $(".score-target").html(settings.score);
           } else {
             $(this).append("<div class='wrong answer'>✘ " + curId + "</div>");
-            settings.score --;
-            $(".score-target").html(settings.score);
+            //settings.score --;
+            //$(".score-target").html(settings.score);
           }
           $(this).removeClass("pic-s");
         }
+
+        if($(".pic-s").length < 1){
+
+          firebase.initializeApp(config);
+
+          var ref = firebase.database().ref();
+
+          ref.on("value", function(snapshot) {
+             d = snapshot.val();
+          }, function (error) {
+             console.log("Error: " + error.code);
+          });
+
+          setTimeout(function(){
+
+            dAvg = d.data.avg;
+            dPlayers = d.data.players;
+
+            dAvg = (dPlayers * dAvg + settings.score) / (dPlayers + 1);
+
+            dPlayers ++;
+
+            var writeRef = firebase.database().ref("data");
+
+            writeRef.update({
+              "avg" : dAvg,
+              "players" : dPlayers
+            });
+
+            $(".final-score-overlay").fadeIn();
+            $(".score-bar-right").css("width" , ((settings.score / 30) * 100) + "%");
+            $(".avg-score-bar").css("width" , ((dAvg / 30) * 100) + "80%");
+            $("#avg").html(dPlayers);
+
+          }, 500);
+
+        }
+
       });
 
       var gameStart = function() {
@@ -115,7 +168,7 @@
         var arrCopy =[];
 
         $.each(combined, function(i, el){
-            if($.inArray(el, arrCopy) === -1) {arrCopy.push(el); console.log("deleted an item");}
+            if($.inArray(el, arrCopy) === -1) {arrCopy.push(el);}
         });
 
         combined = arrCopy;
@@ -144,7 +197,7 @@
           $(".button").off();
 
           $(".button__active").each(function(index, value) {
-            let name = $(this).attr('id');
+            var name = $(this).attr('id');
             callApi(name);
           });
 
@@ -155,11 +208,11 @@
 
       var callApi = function(ref) {
 
-        let named = eval(ref);
+        var named = eval(ref);
 
         var api = {};
         api.key = "";
-        api.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/" + named.name + "2016?count=50";
+        api.conditions = "http://cooper-union-search-proxy.herokuapp.com/twitter/search/" + named.name + "2016?count=100";
 
         $.ajax({
           type: 'GET',
@@ -168,7 +221,7 @@
           success: function(response) {
             for (var i = 0; i < response.statuses.length; i++) {
               named.pics.push("<div class='pic pic-s' style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
-              combined.push("<div class='pic pic-s' id='" + named.name + "-c'style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>")
+              combined.push("<div class='pic pic-s' id='" + named.name + "-c'style='background-image: url(" + response.statuses[i].user.profile_image_url + ")'></div>");
             }
 
             $(".pic-container").empty();
@@ -178,37 +231,23 @@
 
             noDuplicates();
 
-            $(".pic-container").append(combined);
+            var shortened = combined.slice(0, 30);
 
+            $(".pic-container").append(shortened);
 
-//             var j = 0;
-
-//             function sLoop(a, j) {
-//               ts = setTimeout(function() {
-
-//                 $(".pic-container").append(combined[j]);
-//                 //
-//                 while (j < a) {
-//                   $(".pic-container").append(combined[j]);
-//                   j++;
-//                   sLoop();
-//                 }
-//               }, 800)
-
-//             }
-
-//             sLoop(combined.length, j);
           }
-        })
+        });
 
       };
 
-      $("#reset").click(function(){
+      $("#reset, .play-again").click(function(){
         settings.score = 0;
         settings.gameRunning = false;
         settings.selected = null;
+        $(".pic-container").html("");
         $(".button-container").addClass("button-container-start");
-        $(".instructions-2, .spinner").fadeOut();
+        $(".instructions-2, .spinner, .final-score-overlay").fadeOut();
+        $(".avg-score-bar, .score-bar-right").css("width" , "0%");
         $("body").append("<p class='instructions'>Select at least two and up to four candidates</p>");
         $(".button-container").append("<div class='start'>Start</div>");
         $(".pic-container").empty().append('<div class="spinner hide"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i></div>');

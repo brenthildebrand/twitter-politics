@@ -124,7 +124,7 @@ body {
   top: -90vh;
   left: -95vw;
   width: 290vw;
-  height: 250vh;
+  height: 250vw;
   background: linear-gradient(to right, #B22222, #3939ac);
   opacity: 0;
   animation-name: bg-ani;
@@ -157,8 +157,8 @@ body {
 
 .pic {
   float: left;
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   background-size: 100%;
   margin: 25px;
   cursor: pointer;
@@ -174,7 +174,7 @@ body {
     top: 0;
     height: 100%;
     font-size: 11px;
-    line-height: 80px;
+    line-height: 90px;
     background: rgba(0, 255, 0, 0.4);
     box-sizing: border-box;
     text-transform: uppercase;
@@ -423,5 +423,71 @@ body {
   #reset {
     font-size: 10px;
     right: -55px; } }
+.final-score-overlay {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1000; }
+  .final-score-overlay .score-bar {
+    background: #B22222;
+    width: 400px;
+    height: 100px;
+    margin: calc(50vh - 100px) auto auto auto;
+    position: relative; }
+    .final-score-overlay .score-bar .score-bar-right {
+      height: 100%;
+      width: 0%;
+      background: #3939ac;
+      transition: 1s;
+      transition-delay: .5s;
+      position: relative; }
+      .final-score-overlay .score-bar .score-bar-right:after {
+        content: ' ';
+        position: absolute;
+        right: 0;
+        top: -15px;
+        height: 15px;
+        border-right: 1px solid #3939ac; }
+      .final-score-overlay .score-bar .score-bar-right:before {
+        content: 'Your Score';
+        position: absolute;
+        left: calc(100% - 3px);
+        top: -30px;
+        height: 15px;
+        color: black;
+        font-size: 12px;
+        white-space: nowrap; }
+    .final-score-overlay .score-bar .avg-score-bar {
+      position: absolute;
+      left: 0;
+      top: -40px;
+      height: calc(100% + 40px);
+      border-right: 1px dotted black;
+      width: 0%;
+      transition: 1s;
+      transition-delay: .5s; }
+      .final-score-overlay .score-bar .avg-score-bar .avg-score-text {
+        position: absolute;
+        left: 100%;
+        top: -15px;
+        color: black;
+        font-size: 12px;
+        white-space: nowrap; }
+        .final-score-overlay .score-bar .avg-score-bar .avg-score-text span {
+          color: #B22222; }
+  .final-score-overlay .play-again {
+    width: 125px;
+    height: 50px;
+    margin: 50px auto;
+    text-align: center;
+    line-height: 50px;
+    color: black;
+    cursor: pointer;
+    border: 1px solid black;
+    border-bottom-width: 3px; }
 
 /*# sourceMappingURL=style.css.map */
