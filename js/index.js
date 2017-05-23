@@ -1,5 +1,4 @@
-// Set the configuration for your app
-// TODO: Replace with your project's config object
+
 var config = {
   apiKey: "AIzaSyCUBJczlRwsIBVS14yCIpoB-mNg4KyEBLI",
   authDomain: "twitter-politics.firebaseapp.com",
